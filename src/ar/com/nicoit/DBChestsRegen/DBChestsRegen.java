@@ -1,21 +1,20 @@
-package ar.com.nicoit.DBChestRegen;
+package ar.com.nicoit.DBChestsRegen;
 
-import java.util.Random;
+
 import java.util.logging.Level;
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.List;
-import java.util.ArrayList;
-import java.util.LinkedHashSet;
+
 
 import org.bukkit.Bukkit;
-import org.bukkit.plugin.Plugin;
+
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.configuration.file.FileConfiguration;
 
-public class DungeonBridge extends JavaPlugin {
+;
+
+public class DBChestsRegen extends JavaPlugin {
 	public FileConfiguration config;
+	public static DBChestsRegen plugin;
 	
 	public void log(final String message) {
 		getServer().getLogger().log(Level.INFO, "[DungeonBridge] " + message);
@@ -37,8 +36,6 @@ public class DungeonBridge extends JavaPlugin {
 		plugin = this;
 		debug("Enabling debug output");
 
-		random = new Random();
-		
 		if (Bukkit.getScheduler() != null) {
 			PluginManager pm = getServer().getPluginManager();
 			if (pm != null) {
