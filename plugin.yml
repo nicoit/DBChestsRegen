@@ -1,0 +1,8 @@
+name: DBChestsRegen
+main: ar.com.nicoit.DBChestsRegen.DBChestsRegen
+version: 1.0.0
+author: Nicolas Tellez 'aka' Nicoit
+description: Makes every chest to be filled with DungeonBridge.
+softdepend: [DungeonBridge]
+commands:
+permissions:
