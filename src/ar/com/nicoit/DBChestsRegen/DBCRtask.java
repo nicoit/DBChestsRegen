@@ -6,37 +6,43 @@ import ar.com.nicoit.DungeonBridge.FillChestEvent;
 
 import org.bukkit.Chunk;
 import org.bukkit.block.BlockState;
-//import org.bukkit.entity.Entity;
+import org.bukkit.block.Block;
 import org.bukkit.Material;
 
 public class DBCRtask  implements Runnable {
 	DBChestsRegen plugin;
 	private final Chunk chunk;
+	private final Block chest;
+	private final int dmlevel;
 	
 	public DBCRtask(final Chunk chunk) {
 		this.chunk = chunk;
+		this.chest = null;
+		this.dmlevel = 0;
 		this.plugin = DBChestsRegen.plugin;
+	}
+	
+	public DBCRtask(final Block chest, int dml) {
+		this.plugin = DBChestsRegen.plugin;
+		this.chunk = null;
+		this.chest = chest;
+		this.dmlevel = dml;
 	}
 	
 	public void run() {
 		
-//	this.chunk = event.getChunk();
-	//	if (this.chunk.isLoaded())
-	//		plugin.debug(this.chunk.getWorld().getName());
-	
-		for (BlockState bs : this.chunk.getTileEntities()) {
-			//plugin.debug("Encontre " + bs.getBlock().toString());
-			if (bs.getType() == Material.CHEST) {
-				plugin.debug("New Chest!");
-				FillChestEvent fce = new FillChestEvent(bs.getBlock(), "Default");
-				plugin.getServer().getPluginManager().callEvent(fce);
-			} 
-			//else { plugin.debug("Encontre " + bs.getBlock().toString()); }
-		
+		if ((this.chunk != null) && (this.chest == null))
+			for (BlockState bs : this.chunk.getTileEntities()) {
+				if (bs.getType() == Material.CHEST) {
+					plugin.debug("New Chest!");
+					FillChestEvent fce = new FillChestEvent(bs.getBlock(), "Default");
+					plugin.getServer().getPluginManager().callEvent(fce);
+				} 
+			}
+		else if ((this.chunk == null) && (this.chest != null)) {
+			FillChestEvent fce = new FillChestEvent(this.chest, "DMLevel"+ Integer.toString(this.dmlevel) );
+			plugin.getServer().getPluginManager().callEvent(fce);
+			
 		}
-	//for (Entity ent : this.chunk.getEntities() ) {
-	//		plugin.debug("Encontre " + ent.getType().name());
-	//	}
-
 	}
 }

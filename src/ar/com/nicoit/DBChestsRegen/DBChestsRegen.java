@@ -40,7 +40,9 @@ public class DBChestsRegen extends JavaPlugin {
 		if (Bukkit.getScheduler() != null) {
 			PluginManager pm = getServer().getPluginManager();
 			if (pm != null) {
-				pm.registerEvents(new DBCRNCListener(), DBChestsRegen.plugin);
+				if (getConfig().getBoolean("Autofill", false))
+						pm.registerEvents(new DBCRNCListener(), DBChestsRegen.plugin);
+				pm.registerEvents(new DBDMCGEListener(), DBChestsRegen.plugin);
 				debug("Registered event listeners");
 			} else { debug("PluginManager null? 0.o?"); }
 		} else { debug("Bukkit scheduler null? o.0?"); }
