@@ -1,36 +1,30 @@
 package ar.com.nicoit.DBChestsRegen;
 
 
-import org.bukkit.Material;
-import org.bukkit.block.BlockState;
-import org.bukkit.event.EventHandler;
-import org.bukkit.event.Listener;
-import org.bukkit.Chunk;
+import org.bukkit.Bukkit;
+import org.bukkit.event.*;
 import org.bukkit.event.world.ChunkLoadEvent;
-
-import ar.com.nicoit.DungeonBridge.FillChestEvent;
-
 
 public class DBCRNCListener implements Listener {
 	DBChestsRegen plugin = DBChestsRegen.plugin;
+//	private Chunk chunk;
 	
-	@EventHandler
+	@EventHandler (priority = EventPriority.HIGH)
 	public void onChunkGenerate(ChunkLoadEvent event) {
 
-		if (!event.isNewChunk()) {
-			//if (DungeonBridge.instance.getConfig().getBoolean("Debug"))
-			//	DungeonBridge.instance.log("Not a new chunk");
-			return;
-		}
+	//	if (!event.isNewChunk()) {
+//			plugin.debug("Not a new chunk");
+	//		//return;
+	//	} 
+	//	else { plugin.debug("New Chunk!"); }
 
-		Chunk chunk = event.getChunk();
-		BlockState[] blocktiles = chunk.getTileEntities();
-		for (BlockState bs : blocktiles) {
-			if (bs.getType() == Material.CHEST) {
-				FillChestEvent fce = new FillChestEvent(bs.getBlock(), "Default");
-				plugin.getServer().getPluginManager().callEvent(fce);
+		if (event.getChunk() != null) {
+			DBCRtask dbct = new DBCRtask(event.getChunk());
+			if (dbct != null) {
+				Bukkit.getScheduler().scheduleSyncDelayedTask(
+						plugin, new DBCRtask(event.getChunk()), 30L * 1);
 			}
+		//plugin.debug("ya ta");
 		}
 	}
 }
-

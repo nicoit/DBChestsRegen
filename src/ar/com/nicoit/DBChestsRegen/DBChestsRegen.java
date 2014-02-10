@@ -17,7 +17,7 @@ public class DBChestsRegen extends JavaPlugin {
 	public static DBChestsRegen plugin;
 	
 	public void log(final String message) {
-		getServer().getLogger().log(Level.INFO, "[DungeonBridge] " + message);
+		getServer().getLogger().log(Level.INFO, "[DBChestsRegen] " + message);
 	}
 
 	public void debug(final String message) {
@@ -34,6 +34,7 @@ public class DBChestsRegen extends JavaPlugin {
 	@Override
 	public void onEnable() {
 		plugin = this;
+		getConfig().set("Debug", true);
 		debug("Enabling debug output");
 
 		if (Bukkit.getScheduler() != null) {
@@ -41,8 +42,8 @@ public class DBChestsRegen extends JavaPlugin {
 			if (pm != null) {
 				pm.registerEvents(new DBCRNCListener(), DBChestsRegen.plugin);
 				debug("Registered event listeners");
-			}
-		}
+			} else { debug("PluginManager null? 0.o?"); }
+		} else { debug("Bukkit scheduler null? o.0?"); }
 	}
 }
  
